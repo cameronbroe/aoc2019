@@ -21,7 +21,9 @@ AOCLIST(AOCDAYS ${CMAKE_SOURCE_DIR})
 add_compile_definitions(PROJECT_ROOT="${CMAKE_SOURCE_DIR}")
 
 add_library(aoc_utils utils/utils.cpp)
-target_link_libraries(aoc_utils stdc++fs)
+target_link_libraries(aoc_utils boost_filesystem)
+#target_link_libraries(aoc_utils c++fs)
+#target_link_libraries(aoc_utils stdc++fs)
 
 foreach(aocday ${AOCDAYS})
     add_executable(aoc-${aocday} ${aocday}/${aocday}.cpp)

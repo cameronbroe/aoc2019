@@ -6,7 +6,8 @@
 
 #include "utils.h"
 #include <fstream>
-#include <experimental/filesystem>
+#include <boost/filesystem.hpp>
+//#include <experimental/filesystem>
 #include <string>
 
 namespace aoc_utils {
@@ -22,13 +23,13 @@ namespace aoc_utils {
     }
 
     std::string get_file_from_root(std::string day, std::string filename) {
-        std::experimental::filesystem::path root_dir;
+        boost::filesystem::path root_dir;
 #ifdef PROJECT_ROOT
-        root_dir = std::experimental::filesystem::path(std::string(PROJECT_ROOT));
+        root_dir = boost::filesystem::path(std::string(PROJECT_ROOT));
 #else
-        root_dir = std::experimental::filesystem::current_path();
+        root_dir = boost::filesystem::current_path();
 #endif
-        auto filepath = std::experimental::filesystem::absolute(day + "/" + filename, root_dir);
+        auto filepath = boost::filesystem::absolute(day + "/" + filename, root_dir);
         return filepath.string();
     }
 }
