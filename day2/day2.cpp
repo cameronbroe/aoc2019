@@ -15,13 +15,14 @@ int main() {
     boost::split(intcode_program_split, intcode_program_full, [](char c) {
         return c == ',';
     });
+    std::vector<int> intcode_program_base;
+    std::for_each(intcode_program_split.begin(), intcode_program_split.end(),
+                  [&intcode_program_base](std::string intcode) {
+                      intcode_program_base.push_back(std::stoi(intcode));
+                  });
     for(int noun = 0; noun <= 99; noun++) {
         for(int verb = 0; verb <= 99; verb++) {
-            std::vector<int> intcode_program;
-            std::for_each(intcode_program_split.begin(), intcode_program_split.end(),
-                          [&intcode_program](std::string intcode) {
-                              intcode_program.push_back(std::stoi(intcode));
-                          });
+            std::vector<int> intcode_program = std::vector<int>(intcode_program_base);
             bool is_part_one = (noun == 12 && verb == 2);
             intcode_program[1] = noun;
             intcode_program[2] = verb;
