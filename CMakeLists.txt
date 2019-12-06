@@ -3,6 +3,16 @@ project(aoc2019)
 
 set(CMAKE_CXX_STANDARD 17)
 
+if(${WIN32})
+    set(BOOST_LIBRARYDIR "C:\\Libraries\\boost\\stage\\lib")
+    set(BOOST_ROOT "C:\\Libraries\\boost")
+    set(BOOST_DEBUG ON)
+    set(Boost_ARCHITECTURE "-x64")
+    set(Boost_DETAILED_FAILURE_MSG ON)
+    set(Boost_USE_STATIC_LIBS ON)  # only find static libs
+    find_package(Boost 1.71.0 REQUIRED filesystem)
+endif()
+
 macro(AOCLIST result curdir)
     file(GLOB children RELATIVE ${curdir} ${curdir}/*)
     set(dirlist "")
@@ -21,7 +31,11 @@ AOCLIST(AOCDAYS ${CMAKE_SOURCE_DIR})
 add_compile_definitions(PROJECT_ROOT="${CMAKE_SOURCE_DIR}")
 
 add_library(aoc_utils utils/utils.cpp)
-target_link_libraries(aoc_utils boost_filesystem)
+if(${WIN32})
+    target_link_libraries(aoc_utils Boost::filesystem)
+else()
+    target_link_libraries(aoc_utils boost_filesystem)
+endif()
 #target_link_libraries(aoc_utils c++fs)
 #target_link_libraries(aoc_utils stdc++fs)
 
