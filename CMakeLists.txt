@@ -30,7 +30,7 @@ AOCLIST(AOCDAYS ${CMAKE_SOURCE_DIR})
 
 add_compile_definitions(PROJECT_ROOT="${CMAKE_SOURCE_DIR}")
 
-add_library(aoc_utils utils/utils.cpp)
+add_library(aoc_utils utils/utils.cpp utils/intcode.cpp)
 if(${WIN32})
     target_link_libraries(aoc_utils Boost::filesystem)
 else()
