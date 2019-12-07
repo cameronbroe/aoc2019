@@ -5,6 +5,7 @@
 #include "intcode.h"
 
 #include <iostream>
+#include <utility>
 
 int charToInt(char c) {
     return c - '0';
@@ -70,7 +71,8 @@ void IntcodeComputer::runCycle() {
             break;
         case 3:
             op1 = this->program[program_counter + 1];
-            this->program[op1] = program_input;
+            this->program[op1] = input_queue.front();
+            input_queue.pop();
             program_counter += 2;
             break;
         case 4:
@@ -80,7 +82,8 @@ void IntcodeComputer::runCycle() {
             } else {
                 arg1 = op1;
             }
-            std::cout << "[COMPUTER] => " << arg1 << std::endl;
+//            std::cout << "[COMPUTER] => " << arg1 << std::endl;
+            output_queue.push(arg1);
             program_counter += 2;
             break;
         case 5:
@@ -168,7 +171,7 @@ void IntcodeComputer::runCycle() {
             program_counter += 4;
             break;
         case 99:
-            std::cout << "[COMPUTER] => halt" << std::endl;
+//            std::cout << "[COMPUTER] => halt" << std::endl;
             halted = true;
             break;
         default:
@@ -179,4 +182,23 @@ void IntcodeComputer::runCycle() {
 
 bool IntcodeComputer::isHalted() {
     return halted;
+}
+
+void IntcodeComputer::pushInput(int input) {
+    input_queue.push(input);
+}
+
+IntcodeComputer::IntcodeComputer(std::vector<int> program)
+    : program_counter(0) {
+    this->program = std::move(program);
+}
+
+bool IntcodeComputer::hasOutput() {
+    return !output_queue.empty();
+}
+
+int IntcodeComputer::getNextOutput() {
+    int output = output_queue.front();
+    output_queue.pop();
+    return output;
 }
