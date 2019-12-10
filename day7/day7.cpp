@@ -7,7 +7,7 @@
 #include <boost/algorithm/string.hpp>
 #include <unordered_map>
 
-void partOne(std::vector<int> program) {
+void partOne(std::vector<int64_t> program) {
     std::vector<int> phase_sequences = { 0, 1, 2, 3, 4 };
     std::vector<int> thruster_outputs;
 
@@ -71,7 +71,7 @@ void partOne(std::vector<int> program) {
     std::cout << "part 1 answer: " << *std::max_element(thruster_outputs.begin(), thruster_outputs.end()) << std::endl;
 }
 
-void partTwo(std::vector<int> program) {
+void partTwo(std::vector<int64_t> program) {
     std::vector<int> phase_sequences = { 5, 6, 7, 8, 9 };
     std::vector<int> thruster_outputs;
 
@@ -149,7 +149,7 @@ int main() {
     boost::split(intcode_program_split, intcode_program_full, [](char c) {
         return c == ',';
     });
-    std::vector<int> program;
+    std::vector<int64_t> program;
     std::for_each(intcode_program_split.begin(), intcode_program_split.end(),
                   [&program](std::string intcode) {
                       program.push_back(std::stoi(intcode));

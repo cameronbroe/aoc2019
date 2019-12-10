@@ -11,22 +11,23 @@
 
 class IntcodeComputer {
 private:
-    std::vector<int> program;
+    std::vector<int64_t> program;
     int program_counter;
     bool halted = false;
-    std::queue<int> input_queue;
-    std::queue<int> output_queue;
+    std::queue<int64_t> input_queue;
+    std::queue<int64_t> output_queue;
+    int relative_base;
 
     std::tuple<int, int, int> parseParameterModes(std::string modes);
 
 public:
     IntcodeComputer()=default;
-    explicit IntcodeComputer(std::vector<int> program);
+    explicit IntcodeComputer(std::vector<int64_t> program);
     void runCycle();
     bool isHalted();
-    void pushInput(int input);
+    void pushInput(int64_t input);
     bool hasOutput();
-    int getNextOutput();
+    int64_t getNextOutput();
 };
 
 #endif //AOC2019_INTCODE_H
